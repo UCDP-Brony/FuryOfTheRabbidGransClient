@@ -46,13 +46,13 @@ class ClientConnection implements Runnable {
             out = new PrintWriter(socket.getOutputStream());
             sc = new Scanner(System.in);
             
-            gui.setNameText(in.readLine());
+            gui.setLabelText(in.readLine());
             while(messageWaiting){
                 sleep(10);
             }
             while(!connectedToRoom){
                 messageWaiting = true;
-                gui.setRoomText(in.readLine());
+                gui.setLabelText(in.readLine());
                 while(messageWaiting){
                     sleep(10);
                 }

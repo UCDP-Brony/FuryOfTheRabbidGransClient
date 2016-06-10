@@ -5,9 +5,11 @@
  */
 package thefuryoftherabbidgransclient;
 
+import java.awt.Component;
 import java.awt.TextField;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -15,49 +17,35 @@ import javax.swing.JPanel;
  * @author TheDoctor
  */
 public class ConnectionGui extends JFrame implements Runnable{
-    private JPanel panel;
-    private TextField nameField;
-    private TextField roomField;
-    private JButton okButton;
-    private ClientConnection cc;
+    private final JPanel panel;
+    private final TextField entry;    
+    private final JButton okButton;
+    private final JLabel label;
+    private final ClientConnection cc;
     
     public ConnectionGui(ClientConnection cc){
         this.cc = cc;
         this.panel = new JPanel();
-        this.nameField = new TextField();
-        this.nameField.setEnabled(true);
-        this.roomField = new TextField();      
-        this.roomField.setEnabled(false);
-        this.okButton = new JButton("ok");
+        this.label = new JLabel();
+        this.entry = new TextField();
+        this.okButton = new JButton("ok");     
+        this.initComponents();
+    }
+    
+    private void initComponents(){
         this.okButton.addActionListener(new ConnectionOkBtnListener(this));
-        this.panel.add(this.nameField);
-        this.panel.add(this.roomField);
+        this.panel.add(this.label);
+        this.panel.add(this.entry);
         this.panel.add(this.okButton);
         this.add(this.panel);
     }
 
-    void sendMessage() {
-        if(nameField.isEnabled()){
-            cc.sendMessage(nameField.getText());
-            nameField.setEnabled(false);
-            roomField.setEnabled(true);
-        }
-        else{
-            cc.sendMessage(roomField.getText());
-            roomField.setEnabled(false);
-        }
-            
+    public void sendMessage() {
+        cc.sendMessage(entry.getText());            
     }
 
-    void setNameText(String text) {
-        nameField.setText(text);
-        nameField.setEnabled(true);
-        this.pack();
-    }
-    
-    void setRoomText(String text) {
-        roomField.setText(text);
-        roomField.setEnabled(true);
+    public void setLabelText(String text) {
+        label.setText(text);
         this.pack();
     }
 
