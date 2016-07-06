@@ -21,14 +21,15 @@ import javax.swing.SwingUtilities;
  * @author TheDoctor
  */
 class ClientConnection implements Runnable {
-
+    
     private final Socket socket;
     private BufferedReader in;
     private PrintWriter out;
     private Scanner sc;
     private String name, room;
     private boolean messageWaiting, connectedToRoom;
-    private ConnectionGui gui;
+    private final ConnectionGui gui;
+    private Thread tgame;
 
     public ClientConnection(Socket socket) {
         this.socket = socket;
@@ -41,7 +42,6 @@ class ClientConnection implements Runnable {
     @Override
     public void run() {
         try{
-            
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream());
             sc = new Scanner(System.in);
@@ -58,23 +58,21 @@ class ClientConnection implements Runnable {
                 }
                 String received = in.readLine();
                 System.out.println(received);
-                connectedToRoom = !received.equals("Room already full. Please enter another room indentifier.");
+                connectedToRoom = !received.equals("Room already full. Please enter another room identifier.");
             }
-            while(true){                
-                sleep(10);
-            }
-            
+            gui.close();
         } catch (IOException ex) {
             System.err.println("Server is not responding anymore.");
         } catch (InterruptedException ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
+        tgame = new Thread(new ClientGame(in, out));
+        tgame.start();
     }
     
     public void sendMessage(String message){
         out.println(message);
         out.flush();          
         this.messageWaiting = false;
-    }        
-    
+    }            
 }

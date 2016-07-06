@@ -5,7 +5,6 @@
  */
 package thefuryoftherabbidgransclient;
 
-import java.awt.Component;
 import java.awt.TextField;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,6 +22,10 @@ public class ConnectionGui extends JFrame implements Runnable{
     private final JLabel label;
     private final ClientConnection cc;
     
+    /**
+     *
+     * @param cc
+     */
     public ConnectionGui(ClientConnection cc){
         this.cc = cc;
         this.panel = new JPanel();
@@ -34,6 +37,7 @@ public class ConnectionGui extends JFrame implements Runnable{
     
     private void initComponents(){
         this.okButton.addActionListener(new ConnectionOkBtnListener(this));
+        this.entry.setColumns(15);
         this.panel.add(this.label);
         this.panel.add(this.entry);
         this.panel.add(this.okButton);
@@ -53,5 +57,10 @@ public class ConnectionGui extends JFrame implements Runnable{
     public void run() {
         this.pack();
         this.setVisible(true);
+    }
+
+    public void close() {
+        this.setVisible(false);
+        this.dispose();
     }
 }
