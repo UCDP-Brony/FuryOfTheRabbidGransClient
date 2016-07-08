@@ -24,10 +24,10 @@ public class TheFuryOfTheRabbidGransClient {
      */
     public static void main(String[] args) {        
         try{
-            System.out.println("Connecting to server...");
-            //socket = new Socket("92.157.204.130", 1500);
+            //System.out.println("Connecting to server...");
+            socket = new Socket("thefuryoftherabbidgrans.tk", 1500);
             //socket = new Socket("192.168.1.28", 1500);
-            socket = new Socket(InetAddress.getLocalHost(), 1500);
+            //socket = new Socket(InetAddress.getLocalHost(), 1500);
             System.out.println("connected !");
             t1 = new Thread(new ClientConnection(socket));
             t1.start(); 
