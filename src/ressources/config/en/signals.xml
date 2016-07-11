@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><config>
+    <C200>Connected!</C200>
+
+    <C210>Login: </C210>
+    <C211>Password: </C211>
+    <C212>Room: </C212>
+
+    <C213_P1>You are connected to the room </C213_P1>
+    <C213_P2>. There id/are </C213_P2>
+    <C213_P3> player(s) currently connected.</C213_P3>
+
+    <C215_P1>Player </C215_P1>
+    <C215_P2> joined the room </C215_P2>
+    <C215_P3>.</C215_P3>
+
+    <C218_P1>Player </C218_P1>
+    <C218_P2> exited the room </C218_P2>
+    <C218_P3>.</C218_P3>    
+
+    <C219>Successful disconnect.</C219>
+
+    <C400>Error : unable to connect to server.</C400>
+    <C401>Error : game server offline.</C401>
+    <C410>Disconnected.</C410>
+    <C411>Error in login or password. Try again.</C411>
+    <C413>Error : the room is full ! Chose another one.</C413>
+
+    <C500>Erreur : no response from server.</C500>
+</config>

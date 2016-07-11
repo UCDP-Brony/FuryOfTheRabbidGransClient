@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><config>
+    <C200>Connecté !</C200>
+
+    <C210>Pseudo : </C210>
+    <C211>Mot de passe : </C211>
+    <C212>Salon : </C212>
+
+    <C213_P1>Vous êtes bien connecté au salon </C213_P1>
+    <C213_P2>. Il y a </C213_P2>
+    <C213_P3> joueur(s) actuellement connecté(s) dans ce salon.</C213_P3>
+
+    <C215_P1>Le joueur </C215_P1>
+    <C215_P2> a rejoint le salon </C215_P2>
+    <C215_P3>.</C215_P3>
+
+    <C218_P1>Le joueur </C218_P1>
+    <C218_P2> a quitté le salon </C218_P2>
+    <C218_P3>.</C218_P3>    
+
+    <C219>Déconnexion réussie.</C219>
+
+    <C400>Erreur : connexion au serveur impossible.</C400>
+    <C401>Erreur : serveur de jeu non lancé sur le serveur distant.</C401>
+    <C410>Déconnecté.</C410>
+    <C411>Erreur dans le pseudo ou le mot de passe. Réessayez.</C411>
+    <C413>Erreur : le salon est déjà plein ! Choisissez-en un autre.</C413>
+
+    <C500>Erreur : le serveur ne répond plus.</C500>
+</config>

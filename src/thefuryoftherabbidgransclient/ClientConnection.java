@@ -15,6 +15,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
+import thefuryoftherabbidgransclient.globals.SignalCodes;
 
 /**
  *
@@ -41,28 +42,37 @@ class ClientConnection implements Runnable {
 
     @Override
     public void run() {
+        SignalCodes sg = SignalCodes.getInstance();
         try{
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream());
             sc = new Scanner(System.in);
             
-            gui.setLabelText(in.readLine());
+            gui.setLabelText(sg.getTextFromSignalCode(in.readLine()));
             while(messageWaiting){
                 sleep(10);
             }
             while(!connectedToRoom){
                 messageWaiting = true;
-                gui.setLabelText(in.readLine());
+                gui.setLabelText(sg.getTextFromSignalCode(in.readLine()));
                 while(messageWaiting){
                     sleep(10);
                 }
                 String received = in.readLine();
-                System.out.println(received);
-                connectedToRoom = !received.equals("Room already full. Please enter another room identifier.");
+                if(received.equals("C213_P1")){
+                    System.out.print(sg.getTextFromSignalCode(received));
+                    System.out.print(in.readLine());
+                    System.out.print(sg.getTextFromSignalCode(in.readLine()));
+                    System.out.print(in.readLine());
+                    System.out.println(sg.getTextFromSignalCode(in.readLine()));
+                } else {
+                    System.out.println(sg.getTextFromSignalCode(received));
+                }
+                connectedToRoom = !received.equals("C413");
             }
             gui.close();
         } catch (IOException ex) {
-            System.err.println("Server is not responding anymore.");
+            System.err.println(sg.getTextFromSignalCode("C500"));
         } catch (InterruptedException ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -7,10 +7,7 @@ package thefuryoftherabbidgransclient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import thefuryoftherabbidgransclient.globals.SignalCodes;
 
 /**
  *
@@ -20,7 +17,7 @@ class ClientReception implements Runnable {
 
     private boolean connected;
     private final ClientGame cGame;
-    private BufferedReader in;
+    private final BufferedReader in;
 
     public ClientReception(ClientGame cGame, BufferedReader in) {        
         this.in = in;
@@ -30,16 +27,26 @@ class ClientReception implements Runnable {
 
     @Override
     public void run() {
+        SignalCodes sg = SignalCodes.getInstance();
         while(connected){
             try{
                 String message = in.readLine();
-                if(message.equals("exit")){
+                if(message.equals("C219")){
                     throw new IOException();
+                } else if(message.equals("C215_P1") || message.equals("C218_P1")){
+                    System.out.print(sg.getTextFromSignalCode(message));
+                    System.out.print(in.readLine());
+                    System.out.print(sg.getTextFromSignalCode(in.readLine()));
+                    System.out.print(in.readLine());
+                    System.out.println(sg.getTextFromSignalCode(in.readLine()));
+                }else if(message.equals("C201")){
+                    System.out.print(in.readLine());
+                } else {
+                    cGame.getMessageFromServer(message);                
                 }
-                cGame.getMessageFromServer(message);                
             } catch (IOException ex) {
                 connected = false;
-                System.out.println("Lost connection.");
+                System.out.println(sg.getTextFromSignalCode("C410"));
             }
         }
     }
