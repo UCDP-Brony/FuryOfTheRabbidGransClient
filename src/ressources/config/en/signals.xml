@@ -3,10 +3,11 @@
 
     <C210>Login: </C210>
     <C211>Password: </C211>
+    <C211_1>Connection to server successful.</C211_1>
     <C212>Room: </C212>
 
     <C213_P1>You are connected to the room </C213_P1>
-    <C213_P2>. There id/are </C213_P2>
+    <C213_P2>. There is/are </C213_P2>
     <C213_P3> player(s) currently connected.</C213_P3>
 
     <C215_P1>Player </C215_P1>

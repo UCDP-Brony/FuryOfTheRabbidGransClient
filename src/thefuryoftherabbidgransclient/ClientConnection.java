@@ -28,7 +28,7 @@ class ClientConnection implements Runnable {
     private PrintWriter out;
     private Scanner sc;
     private String name, room;
-    private boolean messageWaiting, connectedToRoom;
+    private boolean messageWaiting, connectedToRoom, connectedToServer;
     private final ConnectionGui gui;
     private Thread tgame;
 
@@ -47,14 +47,26 @@ class ClientConnection implements Runnable {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream());
             sc = new Scanner(System.in);
-            
-            gui.setLabelText(sg.getTextFromSignalCode(in.readLine()));
-            while(messageWaiting){
-                sleep(10);
+            String m = in.readLine();
+            gui.setLabelText(sg.getTextFromSignalCode(m),m.equals("C211"));
+                
+            while(!connectedToServer){
+                while(messageWaiting){
+                    sleep(10);
+                } 
+                String received = in.readLine();
+                if (received.equals("C211_1")){
+                    System.out.println(sg.getTextFromSignalCode(received));
+                    connectedToServer = true;
+                } else if (received.equals("C411")){
+                    System.out.println(sg.getTextFromSignalCode(received));
+                } else {
+                    gui.setLabelText(sg.getTextFromSignalCode(received), received.equals("C211"));
+                }
             }
             while(!connectedToRoom){
                 messageWaiting = true;
-                gui.setLabelText(sg.getTextFromSignalCode(in.readLine()));
+                gui.setLabelText(sg.getTextFromSignalCode(in.readLine()), false);
                 while(messageWaiting){
                     sleep(10);
                 }
@@ -71,11 +83,8 @@ class ClientConnection implements Runnable {
                 connectedToRoom = !received.equals("C413");
             }
             gui.close();
-        } catch (IOException ex) {
-            System.err.println(sg.getTextFromSignalCode("C500"));
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (IOException | InterruptedException ex) {
+                Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);        }
         tgame = new Thread(new ClientGame(in, out));
         tgame.start();
     }
