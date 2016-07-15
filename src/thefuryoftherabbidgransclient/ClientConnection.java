@@ -58,7 +58,7 @@ class ClientConnection implements Runnable {
                 if (received.equals("C211_1")){
                     System.out.println(sg.getTextFromSignalCode(received));
                     connectedToServer = true;
-                } else if (received.equals("C411")){
+                } else if (received.equals("C411") || received.equals("C411_1")){
                     System.out.println(sg.getTextFromSignalCode(received));
                 } else {
                     gui.setLabelText(sg.getTextFromSignalCode(received), received.equals("C211"));

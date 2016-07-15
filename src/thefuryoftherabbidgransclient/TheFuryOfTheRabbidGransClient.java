@@ -27,9 +27,9 @@ public class TheFuryOfTheRabbidGransClient {
         SignalCodes sg = SignalCodes.getInstance();
         try{
             //System.out.println("Connecting to server...");
-            socket = new Socket("thefuryoftherabbidgrans.tk", 1500);
+            //socket = new Socket("thefuryoftherabbidgrans.tk", 1500);
             //socket = new Socket("192.168.1.28", 1500);
-            //socket = new Socket(InetAddress.getLocalHost(), 1500);
+            socket = new Socket(InetAddress.getLocalHost(), 1500);
             System.out.println(sg.getTextFromSignalCode("C200"));
             t1 = new Thread(new ClientConnection(socket));
             t1.start(); 

@@ -24,6 +24,7 @@
     <C401>Error : game server offline.</C401>
     <C410>Disconnected.</C410>
     <C411>Error in login or password. Try again.</C411>
+    <C411_1>Error : you are already connected.</C411_1>
     <C413>Error : the room is full ! Chose another one.</C413>
 
     <C500>Erreur : no response from server.</C500>

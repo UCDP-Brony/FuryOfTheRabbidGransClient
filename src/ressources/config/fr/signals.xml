@@ -24,6 +24,7 @@
     <C401>Erreur : serveur de jeu non lancé sur le serveur distant.</C401>
     <C410>Déconnecté.</C410>
     <C411>Erreur dans le pseudo ou le mot de passe. Réessayez.</C411>
+    <C411_1>Erreur : Vous êtes déjà connecté.</C411_1>
     <C413>Erreur : le salon est déjà plein ! Choisissez-en un autre.</C413>
 
     <C500>Erreur : le serveur ne répond plus.</C500>

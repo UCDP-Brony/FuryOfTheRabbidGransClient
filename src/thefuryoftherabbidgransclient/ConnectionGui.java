@@ -6,6 +6,8 @@
 package thefuryoftherabbidgransclient;
 
 import java.awt.TextField;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -50,7 +52,7 @@ public class ConnectionGui extends JFrame implements Runnable{
         this.add(this.panel);
     }
 
-    public void sendMessage() {
+    public void sendMessage() throws NoSuchAlgorithmException {
         if(entry.isVisible()){
             cc.sendMessage(entry.getText());
         } else{
@@ -58,7 +60,10 @@ public class ConnectionGui extends JFrame implements Runnable{
             for(int i = 0; i < pEntry.getPassword().length;i++){
                 res+=pEntry.getPassword()[i];
             }
-            cc.sendMessage(res);
+            MessageDigest md = MessageDigest.getInstance("SHA1");
+                md.update(res.getBytes()); 
+                byte[] output = md.digest();                
+            cc.sendMessage(bytesToHex(output));
         }
     }
 
@@ -89,4 +94,16 @@ public class ConnectionGui extends JFrame implements Runnable{
         this.setVisible(false);
         this.dispose();
     }
+
+    private String bytesToHex(byte[] b) {
+        char hexDigit[] = {'0', '1', '2', '3', '4', '5', '6', '7',
+                         '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+      StringBuilder buf = new StringBuilder();
+      for (int j=0; j<b.length; j++) {
+         buf.append(hexDigit[(b[j] >> 4) & 0x0f]);
+         buf.append(hexDigit[b[j] & 0x0f]);
+      }
+      return buf.toString();
+    }
+
 }
