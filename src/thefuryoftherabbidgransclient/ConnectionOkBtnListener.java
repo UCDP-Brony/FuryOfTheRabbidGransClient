@@ -7,6 +7,9 @@ package thefuryoftherabbidgransclient;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,7 +25,10 @@ class ConnectionOkBtnListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.gui.sendMessage();
-    }
-    
+        try {
+            this.gui.sendMessage();
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ConnectionOkBtnListener.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }    
 }
