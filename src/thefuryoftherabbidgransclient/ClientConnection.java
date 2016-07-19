@@ -64,9 +64,9 @@ class ClientConnection implements Runnable {
                     gui.setLabelText(sg.getTextFromSignalCode(received), received.equals("C211"));
                 }
             }
+            messageWaiting = true;
+            gui.setLabelText(sg.getTextFromSignalCode(in.readLine()), false);                
             while(!connectedToRoom){
-                messageWaiting = true;
-                gui.setLabelText(sg.getTextFromSignalCode(in.readLine()), false);
                 while(messageWaiting){
                     sleep(10);
                 }
@@ -77,10 +77,13 @@ class ClientConnection implements Runnable {
                     System.out.print(sg.getTextFromSignalCode(in.readLine()));
                     System.out.print(in.readLine());
                     System.out.println(sg.getTextFromSignalCode(in.readLine()));
-                } else {
+                    connectedToRoom = true;
+                } else if(!received.equals("C212")){
                     System.out.println(sg.getTextFromSignalCode(received));
+                } else {
+                    messageWaiting = true;
+                    gui.setLabelText(sg.getTextFromSignalCode(received), false);                            
                 }
-                connectedToRoom = !received.equals("C413");
             }
             gui.close();
         } catch (IOException | InterruptedException ex) {
