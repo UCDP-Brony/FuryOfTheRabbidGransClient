@@ -18,10 +18,12 @@ class ClientGame implements Runnable {
     private final BufferedReader in;
     private final PrintWriter out;
     private Thread tReception;
+    private ConnectionGui cg;
 
-    ClientGame(BufferedReader in, PrintWriter out) {
-       this.in = in;
+    ClientGame(BufferedReader in, PrintWriter out, ConnectionGui cg) {
+        this.in = in;
         this.out = out;
+        this.cg = cg;
     }
 
 
@@ -41,8 +43,7 @@ class ClientGame implements Runnable {
     }
     
     public void getMessageFromServer(String message) {
-        System.out.println("got message from server : "+message);
-        
+        cg.getInfo(message);        
     }
 
     public void sendMessageToServer(String message) {

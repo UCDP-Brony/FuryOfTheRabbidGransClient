@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><config>
+    
+    <discBtn>Déconnexion</discBtn>
+    
+    
     <C200>Connecté !</C200>
 
     <C210>Pseudo : </C210>
     <C211>Mot de passe : </C211>
     <C211_1>Connexion au serveur réussie.</C211_1>
+    <C211_2>Veuillez entrer votre pseudo, puis votre mot de passe, et enfin le salon que vous désirez rejoindre.</C211_2>
     <C212>Salon : </C212>
 
     <C213_P1>Vous êtes bien connecté au salon </C213_P1>
@@ -26,6 +31,7 @@
     <C411>Erreur dans le pseudo ou le mot de passe. Réessayez.</C411>
     <C411_1>Erreur : Vous êtes déjà connecté.</C411_1>
     <C413>Erreur : le salon est déjà plein ! Choisissez-en un autre.</C413>
+    <C413_1>Erreur : le nom de salon est invalide. Choisissez un nom de moins de 255 caractères.</C413_1>
 
     <C500>Erreur : le serveur ne répond plus.</C500>
 </config>

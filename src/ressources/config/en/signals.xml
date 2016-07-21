@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><config>
+    
+    <discBtn>Disconnect</discBtn>
+    
+    
     <C200>Connected!</C200>
 
     <C210>Login: </C210>
     <C211>Password: </C211>
     <C211_1>Connection to server successful.</C211_1>
+    <C211_2>Please enter you login, then your password, then the room you want to join.</C211_2>
     <C212>Room: </C212>
 
     <C213_P1>You are connected to the room </C213_P1>
@@ -26,6 +31,7 @@
     <C411>Error in login or password. Try again.</C411>
     <C411_1>Error : you are already connected.</C411_1>
     <C413>Error : the room is full ! Chose another one.</C413>
+    <C413_1>Error : invalid room name. Chose a name shorter than 255 characters.</C413_1>
 
     <C500>Erreur : no response from server.</C500>
 </config>

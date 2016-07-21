@@ -48,6 +48,7 @@ class ClientConnection implements Runnable {
             out = new PrintWriter(socket.getOutputStream());
             sc = new Scanner(System.in);
             String m = in.readLine();
+            gui.getInfo(sg.getTextFromSignalCode("C211_2"));
             gui.setLabelText(sg.getTextFromSignalCode(m),m.equals("C211"));
                 
             while(!connectedToServer){
@@ -55,13 +56,19 @@ class ClientConnection implements Runnable {
                     sleep(10);
                 } 
                 String received = in.readLine();
-                if (received.equals("C211_1")){
-                    System.out.println(sg.getTextFromSignalCode(received));
-                    connectedToServer = true;
-                } else if (received.equals("C411") || received.equals("C411_1")){
-                    System.out.println(sg.getTextFromSignalCode(received));
-                } else {
-                    gui.setLabelText(sg.getTextFromSignalCode(received), received.equals("C211"));
+                switch (received) {
+                    case "C211_1":
+                        gui.getInfo(sg.getTextFromSignalCode(received));
+                        gui.setDiscBtnEnabled(true);
+                        connectedToServer = true;
+                        break;
+                    case "C411":
+                    case "C411_1":
+                        gui.getError(sg.getTextFromSignalCode(received));
+                        break;
+                    default:
+                        gui.setLabelText(sg.getTextFromSignalCode(received), received.equals("C211"));
+                        break;
                 }
             }
             messageWaiting = true;
@@ -71,24 +78,33 @@ class ClientConnection implements Runnable {
                     sleep(10);
                 }
                 String received = in.readLine();
-                if(received.equals("C213_P1")){
-                    System.out.print(sg.getTextFromSignalCode(received));
-                    System.out.print(in.readLine());
-                    System.out.print(sg.getTextFromSignalCode(in.readLine()));
-                    System.out.print(in.readLine());
-                    System.out.println(sg.getTextFromSignalCode(in.readLine()));
-                    connectedToRoom = true;
-                } else if(!received.equals("C212")){
-                    System.out.println(sg.getTextFromSignalCode(received));
-                } else {
-                    messageWaiting = true;
-                    gui.setLabelText(sg.getTextFromSignalCode(received), false);                            
+                switch (received) {
+                    case "C213_P1":
+                        String txt = sg.getTextFromSignalCode(received);
+                        txt += in.readLine();
+                        txt += sg.getTextFromSignalCode(in.readLine());
+                        txt += in.readLine();
+                        txt += sg.getTextFromSignalCode(in.readLine());
+                        gui.getInfo(txt);
+                        connectedToRoom = true;
+                        break;
+                    case "C219":
+                        gui.dispose();
+                        System.exit(0);
+                    case "C212":
+                        messageWaiting = true;
+                        gui.getError(sg.getTextFromSignalCode("C413_1"));
+                        gui.setLabelText(sg.getTextFromSignalCode(received), false);
+                        break;
+                    default:
+                        gui.getError(sg.getTextFromSignalCode(received));
+                        break;
                 }
             }
-            gui.close();
         } catch (IOException | InterruptedException ex) {
-                Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);        }
-        tgame = new Thread(new ClientGame(in, out));
+                Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);        
+        }
+        tgame = new Thread(new ClientGame(in, out, gui));
         tgame.start();
     }
     

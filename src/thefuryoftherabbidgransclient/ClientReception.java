@@ -31,18 +31,23 @@ class ClientReception implements Runnable {
         while(connected){
             try{
                 String message = in.readLine();
-                if(message.equals("C219")){
-                    throw new IOException();
-                } else if(message.equals("C215_P1") || message.equals("C218_P1")){
-                    System.out.print(sg.getTextFromSignalCode(message));
-                    System.out.print(in.readLine());
-                    System.out.print(sg.getTextFromSignalCode(in.readLine()));
-                    System.out.print(in.readLine());
-                    System.out.println(sg.getTextFromSignalCode(in.readLine()));
-                }else if(message.equals("C201")){
-                    System.out.print(in.readLine());
-                } else {
-                    cGame.getMessageFromServer(message);                
+                switch (message) {
+                    case "C219":
+                        throw new IOException();
+                    case "C215_P1":
+                    case "C218_P1":
+                        System.out.print(sg.getTextFromSignalCode(message));
+                        System.out.print(in.readLine());
+                        System.out.print(sg.getTextFromSignalCode(in.readLine()));
+                        System.out.print(in.readLine());
+                        System.out.println(sg.getTextFromSignalCode(in.readLine()));
+                        break;
+                    case "C201":                
+                        System.out.print(in.readLine());
+                        break;
+                    default:
+                        cGame.getMessageFromServer(message);
+                        break;
                 }
             } catch (IOException ex) {
                 connected = false;
