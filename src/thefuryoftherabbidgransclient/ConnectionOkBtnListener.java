@@ -26,7 +26,11 @@ class ConnectionOkBtnListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            this.gui.sendMessage();
+            if(this.gui.shouldSendPassword()){
+                this.gui.sendPassword();
+            } else {
+                this.gui.sendMessage();
+            }
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(ConnectionOkBtnListener.class.getName()).log(Level.SEVERE, null, ex);
         }

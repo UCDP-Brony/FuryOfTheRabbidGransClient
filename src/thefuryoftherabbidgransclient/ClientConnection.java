@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import static java.lang.Thread.sleep;
 import java.net.Socket;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -113,4 +115,29 @@ class ClientConnection implements Runnable {
         out.flush();          
         this.messageWaiting = false;
     }            
+    
+    public void sendPassword(String uncryptedPass){
+         
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA1");
+            md.update(uncryptedPass.getBytes());
+            byte[] output = md.digest();
+            this.sendMessage(bytesToHex(output));
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    private String bytesToHex(byte[] b) {
+        char hexDigit[] = {'0', '1', '2', '3', '4', '5', '6', '7',
+                         '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+        StringBuilder buf = new StringBuilder();
+        for (int j=0; j<b.length; j++) {
+            buf.append(hexDigit[(b[j] >> 4) & 0x0f]);
+            buf.append(hexDigit[b[j] & 0x0f]);
+        }
+        return buf.toString();
+    }
+
 }
