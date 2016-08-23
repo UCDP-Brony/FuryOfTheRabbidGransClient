@@ -7,7 +7,8 @@ package thefuryoftherabbidgransclient;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
-import java.util.Scanner;
+import thefuryoftherabbidgransclient.game.TestGame;
+import thefuryoftherabbidgransclient.gameEngine.core.CoreEngine;
 
 /**
  *
@@ -19,7 +20,8 @@ class ClientGame implements Runnable {
     private final PrintWriter out;
     private Thread tReception;
     private ConnectionGui cg;
-
+    private CoreEngine engine;
+    
     ClientGame(BufferedReader in, PrintWriter out, ConnectionGui cg) {
         this.in = in;
         this.out = out;
@@ -31,19 +33,15 @@ class ClientGame implements Runnable {
     public void run() {        
         tReception = new Thread(new ClientReception(this, in));
         tReception.start();
-        boolean connected = true;
-        Scanner sc = new Scanner(System.in);
-        while(connected){
-            String message = sc.nextLine();
-            if(message.equals("quit")||message.equals("exit")){
-                connected = false;                
-            }   
-            sendMessageToServer(message);            
-        }
+        
+        this.engine = new CoreEngine(800,600,60, new TestGame());
+        engine.createWindow("The Fury Of The Rabbid Grans !");
+        engine.start();
     }
     
     public void getMessageFromServer(String message) {
-        cg.getInfo(message);        
+        cg.getInfo(message);  
+        engine.gotInputFromServer(message);
     }
 
     public void sendMessageToServer(String message) {
